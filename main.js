@@ -7,8 +7,21 @@ let size;
 sizePrompt.addEventListener('click', function () {
   columns = window.prompt('Enter number of columns you want between 1-100');
   size = columns * columns;
-  generateGrid(columns, size);
+  
+  if (checkBounds(columns)) {
+    generateGrid(columns, size);
+  } else {
+    window.alert('Must be between 1-100');
+  }
 });
+
+function checkBounds(columnsEntered) {
+  if (columnsEntered >= 1 && columnsEntered <= 100) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
 function generateGrid(numberOfColumns, numberOfBoxes) {
   const containerWidth = 800;
