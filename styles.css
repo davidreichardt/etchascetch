@@ -1,20 +1,56 @@
 .grid-container {
-    width: 800px;
-    height: 800px;
-    border: 2px dotted black;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
+  width: 800px;
+  height: 800px;
+  border: 2px dotted black;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.grid-size-container {
+  border: 1px solid black;
+  width: 800px;
+  height: 70px;
+  margin: 10px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.grid-size-prompt {
+  width: 115px;
+  height: 40px;
+  border: 1px solid black;
+  background-color: #321c3d;
+  color: white;
+  border-radius: 15px;
+}
+
+.grid-size-text {
+  width: 250px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.grid-size {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 30px;
+  border: 1px solid darkgray;
 }
 
 .grid-box {
-    box-sizing: border-box;
-    
-    border: 1px solid lightgrey;
+  box-sizing: border-box;
+
+  border: 1px solid lightgrey;
 }
 
 /* .grid-box:hover {
     background-color: black;
 } */
-

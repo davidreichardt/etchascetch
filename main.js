@@ -1,53 +1,76 @@
-const sizeBtn = document.querySelector('.grid-size-prompt');
+const sizePrompt = document.querySelector('.grid-size-prompt');
 const gridContainer = document.querySelector('.grid-container');
-let childElement = gridContainer.lastElementChild;
-let size = 0;
+const columnDisplay = document.querySelector('.grid-size');
+let columns;
+let size;
 
-sizeBtn.addEventListener('click', getGridSize);
+sizePrompt.addEventListener('click', function () {
+  columns = window.prompt('Enter number of columns you want between 1-100');
+  size = columns * columns;
+  generateGrid(columns, size);
+});
 
-function draw() {
-  for (let i = 1; i <= gridContainer.children.length; i++) {
-    let box = document.getElementById(`box-${i}`);
-    
-    box.addEventListener('mouseover', function() {
-      box.style.background = 'black';
-    });
+function generateGrid(numberOfColumns, numberOfBoxes) {
+  const containerWidth = 800;
+  let boxSize = containerWidth / numberOfColumns;
+  columnDisplay.textContent = numberOfColumns;
+
+  if (gridContainer.children.length === 0) {
+    console.log('draw');
+    for (let i = 1; i <= numberOfBoxes; i++) {
+      const newBox = document.createElement('div');
+
+      newBox.classList.add('grid-box');
+      newBox.setAttribute('id', `box-${i}`);
+      newBox.style.width = `${boxSize}px`;
+      newBox.style.height = `${boxSize}px`;
+      gridContainer.appendChild(newBox);
+    }
+    draw();
+  } else {
+    replaceExistingGrid();
   }
 }
 
-function removeExistingGrid() {
+function replaceExistingGrid() {
+  let childElement = gridContainer.lastElementChild;
+
   while (childElement) {
     gridContainer.removeChild(childElement);
     childElement = gridContainer.lastElementChild;
   }
+
+  generateGrid(columns, size);
 }
 
-function getGridSize(numberOfColumns) {
-  numberOfColumns = window.prompt('Enter size of grid (Max 100)');
+function randomColor() {
+  let randomizer = () => Math.floor(Math.random() * 256);
+  return (rgb = `rgb(${randomizer()}, ${randomizer()}, ${randomizer()})`);
+}
 
-  removeExistingGrid();
+function addColor() {
+  let hoveredBoxId = getBoxId(this);
+  let hoveredBox = document.getElementById(hoveredBoxId);
 
-  if (numberOfColumns <= 100 && numberOfColumns >= 2) {
-    size = numberOfColumns * numberOfColumns; // enough boxes to equal even rows and columns
-    generateGrid(size, numberOfColumns);
-    draw();
-  } else {
-    window.alert('Please enter a number greater than 1 and less than 100');
-    getGridSize(numberOfColumns);
+  hoveredBox.style.background = randomColor();
+  console.log(hoveredBoxId, hoveredBox);
+}
+
+function getBoxId(box) {
+  let boxId;
+  return (boxId = box.id);
+}
+
+function draw() {
+  if (gridContainer.children.length !== 0) {
+    //get all boxes
+    let boxes = document.querySelectorAll('.grid-box');
+
+    boxes.forEach((box) => {
+      box.addEventListener('mouseover', addColor);
+    });
   }
 }
 
-// pass in total number of divs, and how many columns
-function generateGrid(size, numberOfColumns) {
-  for (let i = 1; i <= size; i++) {
-    const containerWidth = 800;
-    let divSize = containerWidth / numberOfColumns; //calculate for a square div size
-    const newBox = document.createElement('div');
-
-    newBox.className = 'grid-box';
-    newBox.id = `box-${i}`;
-    newBox.style.width = `${divSize}px`;
-    newBox.style.height = `${divSize}px`;
-    gridContainer.appendChild(newBox);
-  }
-}
+generateGrid(16, 256);
+draw();
