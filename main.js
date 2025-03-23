@@ -1,16 +1,18 @@
 const sizeBtn = document.querySelector('.grid-size-prompt');
-let gridSize = 16;
+let defaultrows = 16;
+let size = defaultrows * defaultrows;
 
 sizeBtn.addEventListener('click', getGridSize);
 
-function getGridSize(size) {
-  size = window.prompt('Enter size of grid (Max 100)');
-  if (size <= 100 && size >= 2) {
-    gridSize = size;
-    generateGrid(gridSize);
+function getGridSize(numberOfColumns) {
+  numberOfColumns = window.prompt('Enter size of grid (Max 100)');
+  if (numberOfColumns <= 100 && numberOfColumns >= 2) {
+    size = numberOfColumns * numberOfColumns;
+    console.log(size);
+    generateGrid(size);
   } else {
     window.alert('Please enter a number greater than 1 and less than 100');
-    getGridSize(size);
+    getGridSize(numberOfColumns);
   }
 }
 
@@ -19,10 +21,8 @@ function generateGrid(size) {
 
   for (let i = 1; i <= size; i++) {
     const newBox = document.createElement('div');
-    console.log(`${i}`);
+    console.log(`${i}, ${size}`);
     newBox.className = 'grid-box';
     gridContainer.appendChild(newBox);
   }
 }
-
-generateGrid(gridSize);
